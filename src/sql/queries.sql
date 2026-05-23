@@ -95,18 +95,11 @@ WHERE posicion = 1;
 -- MISSION 4
 -- Your query here;
 
+INSERT INTO observations VALUES
+(501,1,2,'Mario','2026-05-22',-20.594380,139.54472,3);
 
--- MISSION 5
--- Your query here;
+UPDATE observations
+SET observer = 'observer9876589'
+WHERE observer = 'Mario';
 
-
--- MISSION 6
--- Your query here;
-
-
--- MISSION 7
--- Your query here;
-
-
--- MISSION 8
--- Your query here;
+delete from observations where id = 501;

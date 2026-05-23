@@ -62,6 +62,35 @@ ORDER BY COUNT(*) DESC;
 -- MISSION 3
 -- Your query here;
 
+SELECT * 
+FROM observations AS obs
+JOIN regions AS reg ON obs.region_id = reg.id;
+
+SELECT obs.id, spe.scientific_name
+FROM observations AS obs
+JOIN species AS spe ON obs.species_id = spe.id;
+
+SELECT obs.region_id, spe.scientific_name, COUNT(*) 
+FROM observations AS obs
+JOIN species AS spe ON obs.species_id = spe.id
+GROUP BY  obs.region_id, spe.scientific_name
+ORDER BY COUNT(*) DESC;
+
+
+--DANGER Windows Function
+WITH ranked_observations AS (
+    SELECT 
+        obs.region_id, 
+        spe.scientific_name, 
+        COUNT(*) AS total_observations,
+        ROW_NUMBER() OVER(PARTITION BY obs.region_id ORDER BY COUNT(*) DESC) AS posicion
+    FROM observations AS obs
+    JOIN species AS spe ON obs.species_id = spe.id
+    GROUP BY obs.region_id, spe.scientific_name
+)
+SELECT region_id, scientific_name, total_observations
+FROM ranked_observations
+WHERE posicion = 1;
 
 -- MISSION 4
 -- Your query here;
